@@ -1,0 +1,76 @@
+server:
+    port: 8988
+
+data-source:
+    host: http://hasura.infect.joinbox.com/v1/graphql
+    secret: ${hasura_secret}
+
+
+models:
+    tenant:
+        tenant:
+            properties:
+                - id
+                - identifier
+                - logoURL
+                - markdownInfoText
+                - color
+                - name
+        domain:
+            properties:
+                - id
+                - id_tenant
+                - name
+    guideline:
+        diagnosis:
+            properties:
+                - id
+                - id_diagnosisClass
+                - id_guideline
+                - identifier
+                - name
+                - markdownText
+        diagnosis_bacterium:
+            properties:
+                - id
+                - id_bacterium
+                - id_diagnosis
+        dataSource:
+            properties:
+                - id
+                - href
+                - name
+        diagnosisClass:
+            properties:
+                - id
+                - name
+                - identifier
+        guideline:
+            properties:
+                - id
+                - name
+                - markdownDisclaimer
+        therapy:
+            properties:
+                - id
+                - id_diagnosis
+                - id_therapyPriority
+                - markdownText
+        therapy_compound:
+            properties:
+                - id
+                - id_compound
+                - id_therapy
+                - markdownText
+        therapyDataUpdate:
+            properties:
+                - id
+                - id_dataSource
+                - id_therapy
+                - date
+                - comment
+        therapyPriority:
+            properties:
+                - id
+                - priority
+                - name

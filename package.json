@@ -1,0 +1,26 @@
+{
+  "name": "guideline-service",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "guideline service",
+  "scripts": {
+    "proxy": "./bin/envoy -c ./bin/config.yaml",
+    "liveproxy": "./bin/envoy -c ./bin/config-live.yaml",
+    "app": "node --experimental-modules --no-warnings app.js --dev",
+    "app-prod": "node --experimental-modules --no-warnings app.js --prod"
+  },
+  "author": "Lina van der Weg",
+  "license": "MIT",
+  "dependencies": {
+    "@distributed-systems/http2-server": "^2.0.0",
+    "@rainbow-industries/rainbow-config": "^1.0.1",
+    "apollo-boost": "^0.4.4",
+    "apollo-cache-inmemory": "^1.6.3",
+    "apollo-client": "^2.6.4",
+    "apollo-link-http": "^1.5.15",
+    "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
+    "node-fetch": "^2.6.0",
+    "section-tests": "^2.2.4"
+  }
+}
