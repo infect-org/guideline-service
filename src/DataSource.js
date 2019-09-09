@@ -30,6 +30,11 @@ export default class DataSource {
         this.client = new ApolloClient({
             cache: this.cache,
             link: this.link,
+            defaultOptions: {
+                query: {
+                    fetchPolicy: 'no-cache',
+                },
+            },
         });
     }
 
