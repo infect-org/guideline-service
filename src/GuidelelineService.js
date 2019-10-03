@@ -1,15 +1,17 @@
-import RainbowConfig from '@rainbow-industries/rainbow-config';
-import path from 'path';
 import DataSource from './DataSource.js';
-import Server from './Server.js';
 import GQLTranslatorTranslator from './GQLTranslatorTranslator.js';
+import path from 'path';
+import RainbowConfig from '@rainbow-industries/rainbow-config';
+import Server from './Server.js';
+import TenantMiddleware from './TenantMiddleware.js';
+import TenantConfigurationController from './controller/TenantConfiguration.js';
 
 
 export default class GuidelelineService {
 
 
     constructor() {
-
+        this.controllers = new Set();
     }
 
 
@@ -30,9 +32,24 @@ export default class GuidelelineService {
             dataSource: this.dataSource,
         });
 
-        this.requestTranslator.registerRoutes(this.server.getRouter());
+        const router = this.server.getRouter();
+
+        this.setupControllers(router);
+        this.requestTranslator.registerRoutes(router);
     }
 
+
+
+
+    setupControllers(router) {
+        this.controllers.add(new TenantConfigurationController({
+            dataSource: this.dataSource,
+        }));
+
+        for (const controller of this.controllers.values()) {
+            controller.registerRoutes(router);
+        }
+    }
 
 
 
@@ -40,6 +57,14 @@ export default class GuidelelineService {
         this.server = new Server({
             port: this.config.get('server.port'),
         });
+
+        this.tenantMiddleware = new TenantMiddleware({
+            dataSource: this.dataSource,
+        });
+
+        this.server.registerMiddleware(this.tenantMiddleware);
+
+        await this.tenantMiddleware.load();
         await this.server.listen();
     }
 

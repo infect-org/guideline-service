@@ -12,15 +12,33 @@ models:
             properties:
                 - id
                 - identifier
-                - logoURL
-                - markdownInfoText
-                - color
                 - name
         domain:
             properties:
                 - id
                 - id_tenant
                 - name
+        featureFlag:
+            properties:
+                - id
+                - identifier
+        tenant_featureFlag:
+            properties:
+                - id
+                - id_tenant
+                - id_featureFlag
+                - enabled
+        configuration:
+            properties:
+                - id
+                - identifier
+        tenant_configuration:
+                - id
+                - id_tenant
+                - id_configuration
+                - data
+
+
     guideline:
         diagnosis:
             properties:
@@ -30,11 +48,27 @@ models:
                 - identifier
                 - name
                 - markdownText
+                - href
+                - synonyms
+                - hidden
+            hiddenFilter: 
+                guideline: 
+                    hidden:
+                        _eq: false
+                hidden:
+                    _eq: false
         diagnosis_bacterium:
             properties:
                 - id
                 - id_bacterium
                 - id_diagnosis
+            hiddenFilter: 
+                diagnosis:
+                    guideline:
+                        hidden:
+                            _eq: false
+                    hidden:
+                        _eq: false
         dataSource:
             properties:
                 - id
@@ -50,18 +84,33 @@ models:
                 - id
                 - name
                 - markdownDisclaimer
+                - hidden
+                - contactEmail
+            filter:
+                _eq: false
         therapy:
             properties:
                 - id
                 - id_diagnosis
                 - id_therapyPriority
                 - markdownText
+            hiddenFilter: 
+                diagnosis:
+                    guideline:
+                        hidden:
+                            _eq: false
         therapy_compound:
             properties:
                 - id
                 - id_compound
                 - id_therapy
                 - markdownText
+            hiddenFilter:
+                therapy:
+                    diagnosis:
+                        guideline:
+                            hidden:
+                                _eq: false
         therapyDataUpdate:
             properties:
                 - id
@@ -69,6 +118,12 @@ models:
                 - id_therapy
                 - date
                 - comment
+            hiddenFilter:
+                therapy:
+                    diagnosis:
+                        guideline:
+                            hidden:
+                                _eq: false
         therapyPriority:
             properties:
                 - id

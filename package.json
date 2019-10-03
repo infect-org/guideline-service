@@ -6,8 +6,8 @@
   "scripts": {
     "proxy": "./bin/envoy -c ./bin/config.yaml",
     "liveproxy": "./bin/envoy -c ./bin/config-live.yaml",
-    "app": "node --experimental-modules --no-warnings app.js --dev",
-    "app-prod": "node --experimental-modules --no-warnings app.js --prod"
+    "app": "node --experimental-modules --no-warnings --experimental-vm-modules app.js --dev",
+    "app-prod": "node --experimental-modules --experimental-vm-modules --no-warnings app.js --prod"
   },
   "author": "Lina van der Weg",
   "license": "MIT",
@@ -18,6 +18,7 @@
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
     "apollo-link-http": "^1.5.15",
+    "deepmerge": "^4.0.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "node-fetch": "^2.6.0",
