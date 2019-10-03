@@ -21,7 +21,7 @@ export default class TenantMiddleware {
      */
     async handleRequest(request) {
         const authority = request.getHeader(':authority');
-        const domain = authority.substr(0, authority.indexOf(':'))
+        const domain = authority.replace(/:[0-9]+/gi, '');
 
         if (this.hasTenant(domain)) {
             request.setParameter('tenantId', this.resolveTenant(domain));
