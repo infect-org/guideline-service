@@ -35,9 +35,8 @@ export default class GQLTranslatorTranslator {
             for (const [modelName, config] of Object.entries(models)) {
                 const resourceName = `${serviceName}_${modelName}`;
 
-                router.get(`/v1/${modelName}`, async(request) => {
+                router.get(`/${serviceName}/v1/${modelName}`, async(request) => {
                     const query = await this.buildGraphQLQuery(resourceName, config, request, true);
-                    console.log(query.toString());
 
                     let data = await this.dataSource.query(query.toString());
 

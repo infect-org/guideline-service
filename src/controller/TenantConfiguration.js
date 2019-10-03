@@ -67,7 +67,7 @@ export default class TenantConfigurationController {
 
 
     registerRoutes(router) {
-        router.get('/v1/tenantConfig', async (request) => {
+        router.get('/tenant/v1/config', async (request) => {
             return this.handleRequest(request);
         });
     }

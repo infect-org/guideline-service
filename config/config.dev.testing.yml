@@ -51,6 +51,7 @@ models:
                 - href
                 - synonyms
                 - hidden
+            mapper: () => {}
             hiddenFilter: 
                 guideline: 
                     hidden:
