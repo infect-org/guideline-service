@@ -7,36 +7,36 @@ data-source:
 
 
 models:
-    tenant:
-        tenant:
-            _properties:
-                - id
-                - identifier
-                - name
-        domain:
-            _properties:
-                - id
-                - id_tenant
-                - name
-        featureFlag:
-            _properties:
-                - id
-                - identifier
-        tenant_featureFlag:
-            _properties:
-                - id
-                - id_tenant
-                - id_featureFlag
-                - enabled
-        configuration:
-            _properties:
-                - id
-                - identifier
-        tenant_configuration:
-                - id
-                - id_tenant
-                - id_configuration
-                - data
+    # tenant:
+    #     tenant:
+    #         _properties:
+    #             - id
+    #             - identifier
+    #             - name
+    #     domain:
+    #         _properties:
+    #             - id
+    #             - id_tenant
+    #             - name
+    #     featureFlag:
+    #         _properties:
+    #             - id
+    #             - identifier
+    #     tenant_featureFlag:
+    #         _properties:
+    #             - id
+    #             - id_tenant
+    #             - id_featureFlag
+    #             - enabled
+    #     configuration:
+    #         _properties:
+    #             - id
+    #             - identifier
+    #     tenant_configuration:
+    #             - id
+    #             - id_tenant
+    #             - id_configuration
+    #             - data
 
 
     guideline:
@@ -132,11 +132,11 @@ models:
                             tenant:
                                 id:  
                                     _eq: $(tenantId)
-        dataSource:
-            _properties:
-                - id
-                - href
-                - name
+        # dataSource:
+        #     _properties:
+        #         - id
+        #         - href
+        #         - name
         diagnosisClass:
             _properties:
                 - id
@@ -195,27 +195,27 @@ models:
                                 tenant:
                                     id: 
                                         _eq: $(tenantId)
-        therapyDataUpdate:
-            _properties:
-                - id
-                - id_dataSource
-                - id_therapy
-                - date
-                - comment
-            _hiddenFilter:
-                therapy:
-                    diagnosis:
-                        guideline:
-                            hidden:
-                                _eq: false
-            _tenantFilter:
-                therapy:
-                    diagnosis:
-                        guideline:
-                            guideline_tenants:
-                                tenant:
-                                    id: 
-                                        _eq: $(tenantId)
+        # therapyDataUpdate:
+        #     _properties:
+        #         - id
+        #         - id_dataSource
+        #         - id_therapy
+        #         - date
+        #         - comment
+        #     _hiddenFilter:
+        #         therapy:
+        #             diagnosis:
+        #                 guideline:
+        #                     hidden:
+        #                         _eq: false
+        #     _tenantFilter:
+        #         therapy:
+        #             diagnosis:
+        #                 guideline:
+        #                     guideline_tenants:
+        #                         tenant:
+        #                             id: 
+        #                                 _eq: $(tenantId)
         therapyPriority:
             _properties:
                 - id
