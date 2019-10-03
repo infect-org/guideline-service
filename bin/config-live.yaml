@@ -37,7 +37,7 @@ static_resources:
             name: local_route
             virtual_hosts:
             - name: local_service
-              domains: ["guidelines.infect.info"]
+              domains: ["api.infect.info"]
               routes:
               - match: { prefix: "/" }
                 route: { cluster: api }
@@ -47,9 +47,9 @@ static_resources:
         common_tls_context:
           tls_certificates:
             - certificate_chain:
-                filename: "/etc/letsencrypt/live/guidelines.infect.info/fullchain.pem"
+                filename: "/etc/letsencrypt/live/api.infect.info/fullchain.pem"
               private_key:
-                filename: "/etc/letsencrypt/live/guidelines.infect.info/privkey.pem"
+                filename: "/etc/letsencrypt/live/api.infect.info/privkey.pem"
   clusters:
   - name: api
     connect_timeout: 0.25s
