@@ -105,7 +105,6 @@ models:
                 - id
                 - id_compound
                 - id_therapy
-                - markdownText
             hiddenFilter:
                 therapy:
                     diagnosis:

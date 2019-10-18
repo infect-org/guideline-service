@@ -180,7 +180,6 @@ models:
                 - id
                 - id_compound
                 - id_therapy
-                - markdownText
             _hiddenFilter:
                 therapy:
                     diagnosis:
