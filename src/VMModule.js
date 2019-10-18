@@ -35,8 +35,6 @@ export default class VMModule {
         await this.module.link(async () => {});
 
 
-        this.module.instantiate();
-
         const {result} = await this.module.evaluate();
         this.Constructor = result;
     }
