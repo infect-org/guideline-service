@@ -149,6 +149,7 @@ models:
                 - markdownDisclaimer
                 - hidden
                 - contactEmail
+                - href
             _hiddenFilter:
                 hidden:
                     _eq: false

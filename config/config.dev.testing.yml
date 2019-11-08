@@ -87,6 +87,7 @@ models:
                 - markdownDisclaimer
                 - hidden
                 - contactEmail
+                - href
             filter:
                 _eq: false
         therapy:
