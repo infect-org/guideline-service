@@ -50,7 +50,11 @@ export default class GQLTranslatorTranslator {
                     data = await this.postProcessData(config, data);
 
                     // send to the client
-                    request.response().status(200).send(JSON.stringify(data))
+                    request
+                        .response()
+                        .status(200)
+                        .setHeader('content-type', 'application/json')
+                        .send(JSON.stringify(data));
                 });
             }
         }
