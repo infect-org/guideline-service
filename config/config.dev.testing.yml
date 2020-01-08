@@ -7,41 +7,41 @@ data-source:
 
 
 models:
-    tenant:
-        tenant:
-            properties:
-                - id
-                - identifier
-                - name
-        domain:
-            properties:
-                - id
-                - id_tenant
-                - name
-        featureFlag:
-            properties:
-                - id
-                - identifier
-        tenant_featureFlag:
-            properties:
-                - id
-                - id_tenant
-                - id_featureFlag
-                - enabled
-        configuration:
-            properties:
-                - id
-                - identifier
-        tenant_configuration:
-                - id
-                - id_tenant
-                - id_configuration
-                - data
+    # tenant:
+    #     tenant:
+    #         _properties:
+    #             - id
+    #             - identifier
+    #             - name
+    #     domain:
+    #         _properties:
+    #             - id
+    #             - id_tenant
+    #             - name
+    #     featureFlag:
+    #         _properties:
+    #             - id
+    #             - identifier
+    #     tenant_featureFlag:
+    #         _properties:
+    #             - id
+    #             - id_tenant
+    #             - id_featureFlag
+    #             - enabled
+    #     configuration:
+    #         _properties:
+    #             - id
+    #             - identifier
+    #     tenant_configuration:
+    #             - id
+    #             - id_tenant
+    #             - id_configuration
+    #             - data
 
 
     guideline:
         diagnosis:
-            properties:
+            _properties:
                 - id
                 - id_diagnosisClass
                 - id_guideline
@@ -51,82 +51,173 @@ models:
                 - href
                 - synonyms
                 - hidden
-            mapper: () => {}
-            hiddenFilter: 
+
+            _hiddenFilter: 
                 guideline: 
                     hidden:
                         _eq: false
                 hidden:
                     _eq: false
+
+            _tenantFilter:
+
+                guideline:
+                    guideline_tenants:
+                        tenant:
+                            id:  
+                                _eq: $(tenantId)
+            
+            therapies:
+                therapyDataUpdates:
+                    _properties:
+                        - date
+                    _limit: 1
+                    _order_by:
+                        date: desc 
+
+                    dataSource:
+                        _properties:
+                            - name
+                            - href
+
+            _forEach: >
+                class ForEach {
+                    execute(record) {
+                        const latestUpdates = [];
+
+                        if (record.therapies) {
+                            record.therapies.forEach((therapy) => {
+                                if (therapy.therapyDataUpdates) {
+                                    therapy.therapyDataUpdates.forEach((update) => {
+                                        latestUpdates.push({
+                                            date: update.date,
+                                            dataSourceName: update.dataSource.name,
+                                            dataSourceHref: update.dataSource.href,
+                                        });
+                                    });
+                                }
+                            });
+                        }
+
+                        if (record.synonyms) {
+                            record.synonyms = record.synonyms.split(/\s*,\s*/gi);
+                            } else {
+                                record.synonyms = [];
+                            }
+
+                        record.latestUpdates = latestUpdates;
+                        delete record.therapies;
+                    };
+                }
+                ForEach
+
+
+
         diagnosis_bacterium:
-            properties:
+            _properties:
                 - id
                 - id_bacterium
                 - id_diagnosis
-            hiddenFilter: 
+            _hiddenFilter: 
                 diagnosis:
                     guideline:
                         hidden:
                             _eq: false
                     hidden:
                         _eq: false
-        dataSource:
-            properties:
-                - id
-                - href
-                - name
+            _tenantFilter:
+                diagnosis:
+                    guideline:
+                        guideline_tenants:
+                            tenant:
+                                id:  
+                                    _eq: $(tenantId)
+        # dataSource:
+        #     _properties:
+        #         - id
+        #         - href
+        #         - name
         diagnosisClass:
-            properties:
+            _properties:
                 - id
                 - name
                 - identifier
         guideline:
-            properties:
+            _properties:
                 - id
                 - name
                 - markdownDisclaimer
                 - hidden
                 - contactEmail
                 - href
-            filter:
-                _eq: false
+            _hiddenFilter:
+                hidden:
+                    _eq: false
+            _tenantFilter:
+                guideline_tenants:
+                    tenant:
+                        id:  
+                            _eq: $(tenantId)
         therapy:
-            properties:
+            _properties:
                 - id
                 - id_diagnosis
                 - id_therapyPriority
                 - markdownText
-            hiddenFilter: 
+            _hiddenFilter: 
                 diagnosis:
                     guideline:
                         hidden:
                             _eq: false
+            _tenantFilter:
+                diagnosis:
+                    guideline:
+                        guideline_tenants:
+                            tenant:
+                                id: 
+                                    _eq: $(tenantId)
         therapy_compound:
-            properties:
+            _properties:
                 - id
                 - id_compound
                 - id_therapy
-            hiddenFilter:
+            _hiddenFilter:
                 therapy:
                     diagnosis:
                         guideline:
                             hidden:
                                 _eq: false
-        therapyDataUpdate:
-            properties:
-                - id
-                - id_dataSource
-                - id_therapy
-                - date
-                - comment
-            hiddenFilter:
+            _tenantFilter:
                 therapy:
                     diagnosis:
                         guideline:
-                            hidden:
-                                _eq: false
+                            guideline_tenants:
+                                tenant:
+                                    id: 
+                                        _eq: $(tenantId)
+        # therapyDataUpdate:
+        #     _properties:
+        #         - id
+        #         - id_dataSource
+        #         - id_therapy
+        #         - date
+        #         - comment
+        #     _hiddenFilter:
+        #         therapy:
+        #             diagnosis:
+        #                 guideline:
+        #                     hidden:
+        #                         _eq: false
+        #     _tenantFilter:
+        #         therapy:
+        #             diagnosis:
+        #                 guideline:
+        #                     guideline_tenants:
+        #                         tenant:
+        #                             id: 
+        #                                 _eq: $(tenantId)
         therapyPriority:
-            properties:
+            _properties:
                 - id
                 - priority
                 - name
