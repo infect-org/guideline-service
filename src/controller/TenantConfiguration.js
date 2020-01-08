@@ -1,9 +1,6 @@
 
 
-
 export default class TenantConfigurationController {
-
-
 
 
     constructor({
@@ -11,7 +8,6 @@ export default class TenantConfigurationController {
     }) {
         this.dataSource = dataSource;
     }
-
 
 
 
@@ -47,6 +43,12 @@ export default class TenantConfigurationController {
             name: data.name,
             identifier: data.identifier,
             configuration: data.tenant_configurations.map((item) => {
+
+                if (item.configuration.identifier === 'frontend') {
+                    item.data.userInterface.logoUrl = `/tenant/${data.identifier}/logo.svg`;
+                    item.data.userInterface.aboutDocumentUrl = `/tenant/${data.identifier}/about/overlay.md`;
+                }
+
                 return {
                     config: item.data,
                     identifier: item.configuration.identifier,
@@ -62,6 +64,9 @@ export default class TenantConfigurationController {
 
         request.response().status(200).send(config);
     }
+
+
+
 
 
 
