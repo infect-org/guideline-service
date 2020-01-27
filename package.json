@@ -1,7 +1,7 @@
 {
   "name": "@infect/guideline-service",
   "type": "module",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "guideline service",
   "scripts": {
     "proxy": "./bin/envoy -c ./bin/config.yaml",
