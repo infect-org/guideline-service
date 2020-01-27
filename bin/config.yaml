@@ -24,6 +24,7 @@ static_resources:
                 route: { cluster: api }
           http_filters:
           - name: envoy.router
+
   clusters:
   - name: api
     connect_timeout: 0.25s
