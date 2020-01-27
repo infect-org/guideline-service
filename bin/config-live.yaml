@@ -20,6 +20,11 @@ static_resources:
             - name: local_service
               domains: ["*"]
               routes:
+
+              - match: { prefix: "/health" }
+                direct_response:
+                  status: 200
+
               - match: { prefix: "/" }
                 route: { cluster: api }
           http_filters:
