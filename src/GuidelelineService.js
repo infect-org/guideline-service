@@ -7,10 +7,14 @@ import TenantMiddleware from './TenantMiddleware.js';
 import TenantConfigurationController from './controller/TenantConfiguration.js';
 
 
+const appRoot = path.join(path.dirname(new URL(import.meta.url).pathname), '../');
+
+
 export default class GuidelelineService {
 
 
     constructor() {
+        this.appRoot = appRoot;
         this.controllers = new Set();
     }
 
@@ -18,7 +22,7 @@ export default class GuidelelineService {
 
 
     async load() {
-        await this.loadConfig();
+        await this.loadConfig(this.rootDir);
         await this.loadDataSource();
         await this.setupServer();
         await this.setupRoutes();
@@ -70,6 +74,16 @@ export default class GuidelelineService {
 
 
 
+    getPort() {
+        return this.server.port;
+    }
+
+
+
+    async end() {
+        await this.server.close();
+    }
+
 
     async loadDataSource() {
         this.dataSource = new DataSource({
@@ -80,10 +94,13 @@ export default class GuidelelineService {
 
 
 
-    async loadConfig() {
-        const secretsDir = path.join(path.dirname(new URL(import.meta.url).pathname), '../');
-        const configDir = path.join(secretsDir, './config');
-        this.config = new RainbowConfig(configDir, secretsDir);
+    /**
+    * load the configuration files from the /config directory
+    * and secrets from the /secrets.${env}.js file
+    */
+    async loadConfig(rootDir) {
+        const secretsDir = process.env.INIT_CWD || process.cwd();
+        this.config = new RainbowConfig(path.join(this.appRoot, './config'), secretsDir);
         await this.config.load();
     }
 }

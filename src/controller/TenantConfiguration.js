@@ -19,7 +19,7 @@ export default class TenantConfigurationController {
 
         const tenantData = await this.dataSource.query(`
             {
-                tenant_tenant(where: {id: {_eq: 4}}) {
+                tenant_tenant(where: {id: {_eq: ${request.getParameter('tenantId')}}}) {
                     tenant_configurations {
                         data
                         configuration {

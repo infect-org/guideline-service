@@ -1,4 +1,4 @@
-import GuidelelineService from './src/GuidelelineService.js';
+import GuidelelineService from './index.js';
 
 
 const service = new GuidelelineService();
